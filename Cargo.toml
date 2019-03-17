@@ -1,0 +1,71 @@
+[package]
+edition = "2018"
+authors = ["Daniel Egger <daniel@eggers-club.de>"]
+categories = [
+    "embedded",
+    "hardware-support",
+    "no-std",
+]
+description = "Peripheral access API for STM32F0 series microcontrollers"
+documentation = "https://docs.rs/crate/stm32f0xx-hal"
+
+keywords = [
+    "arm",
+    "cortex-m",
+    "stm32f0xx",
+    "hal",
+]
+license = "0BSD"
+name = "stm32f0xx-hal"
+readme = "README.md"
+repository = "https://github.com/stm32-rs/stm32f0xx-hal"
+version = "0.10.1"
+
+[package.metadata.docs.rs]
+features = ["stm32f042", "rt"]
+
+[dependencies]
+bare-metal = { version = "0.2.4", features = ["const-fn"] }
+cortex-m = "0.5.8"
+cortex-m-rt = "0.6.7"
+cortex-m-semihosting = "0.3.2"
+
+nb = "0.1.1"
+void = { version = "1.0.2", default-features = false }
+stm32f0 = "0.5.0"
+
+[dependencies.cast]
+default-features = false
+version = "0.2.2"
+
+[dependencies.embedded-hal]
+features = ["unproven"]
+version = "0.2.2"
+
+[dev-dependencies]
+panic-halt = "0.2.0"
+
+[features]
+device-selected = []
+rt = ["stm32f0/rt"]
+stm32f042 = ["stm32f0/stm32f0x2", "device-selected"]
+stm32f030 = ["stm32f0/stm32f0x0", "device-selected"]
+stm32f030x4 = ["stm32f030x6", "device-selected"]
+stm32f030x6 = ["stm32f030", "device-selected"]
+stm32f030x8 = ["stm32f030", "device-selected"]
+stm32f030xc = ["stm32f030", "device-selected"]
+stm32f070 = ["stm32f0/stm32f0x0", "device-selected"]
+stm32f070x6 = ["stm32f070", "device-selected"]
+stm32f070xb = ["stm32f070", "device-selected"]
+
+[profile.dev]
+debug = true
+
+[profile.release]
+debug = true
+lto = true
+opt-level = "s"
+
+[[example]]
+name = "led_hal_button_irq"
+required-features = ["stm32f042", "rt"]
